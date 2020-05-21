@@ -14,28 +14,38 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinInfo;
     [SerializeField] private TextMeshProUGUI healthInfo;
 
+    public GameObject playerPrefab;
+    private Vector3 startingPosition;
    public  int coins;
    public int health;
 
     void Start()
     {
-        health = 10;
+        health = 3;
         coins = 0;
 
         coinInfo = CoinsText.GetComponent<TextMeshProUGUI>();
         healthInfo = HealthText.GetComponent<TextMeshProUGUI>();
+
+        startingPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
        coinInfo.text = "Coins: " + coins;
-        healthInfo.text = "Health: " + health;
+        healthInfo.text = "Lives: " + health;
 
         if(health < 0)
         {
             Time.timeScale = 0;
             Debug.Log("Game Over");
         }
+    }
+
+
+    public void ReSpawn()
+    {
+        Instantiate(playerPrefab, startingPosition, Quaternion.identity);
     }
 }

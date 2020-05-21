@@ -15,11 +15,17 @@ public class Player : MonoBehaviour
 
     public float MinXValue;
     public float MaxXValue;
+
+    public Vector3 startingPosition;
+    public GameObject GameManager;
+
     void Start()
     {
         bulletpoint = this.transform.GetChild(0).gameObject;
-
+        startingPosition = this.transform.position;
         crossImage = crosshair.GetComponent<Image>();
+
+        GameManager = GameObject.FindGameObjectWithTag("GameUI");
     }
 
     // Update is called once per frame
@@ -41,12 +47,7 @@ public class Player : MonoBehaviour
             this.transform.position = new Vector3(MaxXValue - 0.5f, this.transform.position.y, this.transform.position.z);
         }
 
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
 
-            Instantiate(bulletPrefab, bulletpoint.transform.position, Quaternion.identity);
-        }
         
 
         
@@ -72,9 +73,19 @@ public class Player : MonoBehaviour
         {
             Instantiate(bulletPrefab, bulletpoint.transform.position, Quaternion.identity);
         }
+
+       
 #endif
 
         CrosshairDetection();
+    }
+
+    public void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Jump();
+        }
     }
 
     public void CrosshairDetection()
@@ -89,6 +100,11 @@ public class Player : MonoBehaviour
                 //Change the color of the crosshair;
                 crossImage.color = Color.red;
             }
+
+            else if(hit.collider.gameObject.tag == "BigEnemy")
+            {
+                crossImage.color = Color.blue;
+            }
         }
 
         else
@@ -100,6 +116,36 @@ public class Player : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        //Destroy(collision.gameObject);
+        if(collision.gameObject.tag == "BigEnemy")
+        {
+            GameManager.GetComponent<GameUI>().health--;
+            Destroy(this.gameObject, 0.5f);
+
+            GameManager.GetComponent<GameUI>().ReSpawn();
+        }
+
+        
+        
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Collectable")
+        {
+            GameManager.GetComponent<GameUI>().coins++;
+            Destroy(other.gameObject);
+        }
+    }
+
+    public void FiringBullets()
+    {
+        Instantiate(bulletPrefab, bulletpoint.transform.position, Quaternion.identity);
+    }
+
+
+    public void Jump()
+    {
+        Debug.Log("Jump selected");
+        this.GetComponent<Rigidbody>().AddForce(Vector3.up * 80f, ForceMode.Impulse);
     }
 }
