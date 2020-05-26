@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public GameObject crosshair;
     private Image crossImage;
     public float speed;
+    public float ForwardSpeed;
 
     public float MinXValue;
     public float MaxXValue;
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
 
         if(this.transform.position.x > MinXValue && this.transform.position.x < MaxXValue)
         {
-            this.transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical") * Time.deltaTime * speed, 4f * Time.deltaTime);
+            this.transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical") * Time.deltaTime * speed, ForwardSpeed * Time.deltaTime);
         }
        
         if(this.transform.position.x < MinXValue)

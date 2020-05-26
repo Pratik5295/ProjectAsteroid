@@ -2601,6 +2601,11 @@ PrefabInstance:
       propertyPath: MaxXValue
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 3318490082006812798, guid: 0a9343cb5e6ca49428d3dec8a13a0224,
+        type: 3}
+      propertyPath: ForwardSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4243432705891724279, guid: 0a9343cb5e6ca49428d3dec8a13a0224,
         type: 3}
       propertyPath: m_Name
