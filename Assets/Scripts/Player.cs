@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     public Vector3 startingPosition;
     public GameObject GameManager;
 
+    public bool IsShieldOn;
+    [SerializeField] private float ShieldTimer = 0;
+
     void Start()
     {
         bulletpoint = this.transform.GetChild(0).gameObject;
@@ -36,7 +39,7 @@ public class Player : MonoBehaviour
 
         if(this.transform.position.x > MinXValue && this.transform.position.x < MaxXValue)
         {
-            this.transform.Translate(Input.acceleration.x * 0.8f, 0, 0);
+            this.transform.Translate(Input.acceleration.x * 0.8f, 0, ForwardSpeed * Time.deltaTime);
         }
         if (this.transform.position.x < MinXValue)
         {
@@ -57,7 +60,7 @@ public class Player : MonoBehaviour
 
         if(this.transform.position.x > MinXValue && this.transform.position.x < MaxXValue)
         {
-            this.transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical") * Time.deltaTime * speed, ForwardSpeed * Time.deltaTime);
+            this.transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, ForwardSpeed * Time.deltaTime);
         }
        
         if(this.transform.position.x < MinXValue)
@@ -79,8 +82,10 @@ public class Player : MonoBehaviour
 #endif
 
         CrosshairDetection();
+        ShieldPowerCounter();
     }
 
+   
     public void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -117,13 +122,23 @@ public class Player : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "BigEnemy")
+        if (!IsShieldOn)
         {
-            GameManager.GetComponent<GameUI>().health--;
-            Destroy(this.gameObject, 0.5f);
+            if (collision.gameObject.tag == "BigEnemy")
+            {
+                GameManager.GetComponent<GameUI>().health--;
+                Destroy(this.gameObject, 0.5f);
 
-            GameManager.GetComponent<GameUI>().ReSpawn();
+                GameManager.GetComponent<GameUI>().ReSpawn();
+            }
         }
+
+        else
+        {
+            Destroy(collision.gameObject);
+            GameManager.GetComponent<GameUI>().coins++;
+        }
+      
 
         
         
@@ -135,6 +150,12 @@ public class Player : MonoBehaviour
         {
             GameManager.GetComponent<GameUI>().coins++;
             Destroy(other.gameObject);
+        }
+
+        if(other.gameObject.tag == "ShieldPower")
+        {
+            Debug.Log("Shield power picked up");
+            IsShieldOn = true;
         }
     }
 
@@ -148,5 +169,32 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Jump selected");
         this.GetComponent<Rigidbody>().AddForce(Vector3.up * 80f, ForceMode.Impulse);
+    }
+
+
+    public void DeathZone()
+    {
+        if(this.transform.position.y < -12f)
+        {
+            Debug.Log("Player fell off the grid and died");
+            Destroy(this.gameObject);
+
+            GameManager.GetComponent<GameUI>().ReSpawn();
+        }
+    }
+
+    public void ShieldPowerCounter()
+    {
+        //Shield power will be on for 10 secs
+        if (IsShieldOn)
+        {
+            ShieldTimer += Time.deltaTime;
+
+            if(ShieldTimer >= 10f)
+            {
+                IsShieldOn = false;
+                ShieldTimer = 0;
+            }
+        }
     }
 }

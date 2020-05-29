@@ -11,6 +11,7 @@ TagManager:
   - FxTemporaire
   - BigEnemy
   - Collectable
+  - ShieldPower
   layers:
   - Default
   - TransparentFX

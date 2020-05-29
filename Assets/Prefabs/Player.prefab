@@ -316,8 +316,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 91.13, y: 36.582703, z: 106.49915}
-  m_Center: {x: -3.1881468, y: 3.49945, z: -16.514587}
+  m_Size: {x: 64.56289, y: 45.92462, z: 106.49915}
+  m_Center: {x: 0.31073946, y: -1.1715106, z: -16.514587}
 --- !u!114 &3318490082006812798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +334,7 @@ MonoBehaviour:
     type: 3}
   crosshair: {fileID: 4244335523473529770}
   speed: 12
+  ForwardSpeed: 0
   MinXValue: -7.5
   MaxXValue: 7.5
   startingPosition: {x: 0, y: 0, z: 0}

@@ -8,18 +8,21 @@ public class Bullet : MonoBehaviour
     public GameObject gameLoader;
     private Rigidbody rigi;
 
-    private float speed = 14f;
+    private float speed = 8f;
+
+    [SerializeField] private float playerSpeed;
 
     void Start()
     {
         gameLoader = GameObject.FindGameObjectWithTag("GameUI");
-        rigi = this.GetComponent<Rigidbody>();    
+        rigi = this.GetComponent<Rigidbody>();
+        playerSpeed = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().ForwardSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rigi.velocity = new Vector3(0, 0, speed);
+        rigi.velocity = new Vector3(0, 0, playerSpeed + speed);
 
         Destroy(this.gameObject, 6f);
        
