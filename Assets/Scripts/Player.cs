@@ -157,6 +157,12 @@ public class Player : MonoBehaviour
             Debug.Log("Shield power picked up");
             IsShieldOn = true;
         }
+
+        if(other.gameObject.tag == "Goal")
+        {
+            Debug.Log("Goal reached. Level complete");
+            ForwardSpeed = 0;
+        }
     }
 
     public void FiringBullets()
