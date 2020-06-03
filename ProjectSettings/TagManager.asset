@@ -12,6 +12,8 @@ TagManager:
   - BigEnemy
   - Collectable
   - ShieldPower
+  - Goal
+  - Ground
   layers:
   - Default
   - TransparentFX

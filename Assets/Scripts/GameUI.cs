@@ -11,6 +11,8 @@ public class GameUI : MonoBehaviour
     public GameObject CoinsText;
     public GameObject HealthText;
 
+    public GameObject TimerText;
+
     [SerializeField] private TextMeshProUGUI coinInfo;
     [SerializeField] private TextMeshProUGUI healthInfo;
 
@@ -19,11 +21,13 @@ public class GameUI : MonoBehaviour
    public  int coins;
    public int health;
 
+    public float GameTime;
+
     void Start()
     {
         health = 3;
         coins = 0;
-
+        GameTime = 0;
         coinInfo = CoinsText.GetComponent<TextMeshProUGUI>();
         healthInfo = HealthText.GetComponent<TextMeshProUGUI>();
 
@@ -36,11 +40,14 @@ public class GameUI : MonoBehaviour
        coinInfo.text = "Coins: " + coins;
         healthInfo.text = "Lives: " + health;
 
-        if(health < 0)
+        if(health <= 0)
         {
             Time.timeScale = 0;
             Debug.Log("Game Over");
         }
+
+        GameTime = GameTime + Time.deltaTime;
+        TimerText.GetComponent<Text>().text = "Time:" + GameTime;
     }
 
 

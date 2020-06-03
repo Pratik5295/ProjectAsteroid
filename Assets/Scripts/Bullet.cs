@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     public GameObject gameLoader;
     private Rigidbody rigi;
 
-    private float speed = 8f;
+    private float speed = 20f;
 
     [SerializeField] private float playerSpeed;
 

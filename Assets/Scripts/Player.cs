@@ -20,13 +20,19 @@ public class Player : MonoBehaviour
     public Vector3 startingPosition;
     public GameObject GameManager;
 
+
+    public float MaxSpeed;
+
+    public bool HasJumped;
     public bool IsShieldOn;
     [SerializeField] private float ShieldTimer = 0;
 
     void Start()
     {
+        HasJumped = false;
         bulletpoint = this.transform.GetChild(0).gameObject;
         startingPosition = this.transform.position;
+        ForwardSpeed = 20f;
         crossImage = crosshair.GetComponent<Image>();
 
         GameManager = GameObject.FindGameObjectWithTag("GameUI");
@@ -78,20 +84,27 @@ public class Player : MonoBehaviour
             Instantiate(bulletPrefab, bulletpoint.transform.position, Quaternion.identity);
         }
 
-       
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (!HasJumped)
+            {
+                Jump();
+            }
+            
+        }
+
 #endif
 
         CrosshairDetection();
         ShieldPowerCounter();
+
+        DeathZone();
     }
 
    
     public void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Jump();
-        }
+        
     }
 
     public void CrosshairDetection()
@@ -138,6 +151,16 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             GameManager.GetComponent<GameUI>().coins++;
         }
+
+        if(collision.gameObject.tag == "Ground")
+        {
+            HasJumped = false;
+        }
+
+        else
+        {
+            HasJumped = true;
+        }
       
 
         
@@ -167,14 +190,16 @@ public class Player : MonoBehaviour
 
     public void FiringBullets()
     {
+        Debug.Log("Fire button");
         Instantiate(bulletPrefab, bulletpoint.transform.position, Quaternion.identity);
     }
 
 
     public void Jump()
     {
+        HasJumped = true;
         Debug.Log("Jump selected");
-        this.GetComponent<Rigidbody>().AddForce(Vector3.up * 80f, ForceMode.Impulse);
+        this.GetComponent<Rigidbody>().AddForce(Vector3.up * 70f, ForceMode.Impulse);
     }
 
 
@@ -182,6 +207,7 @@ public class Player : MonoBehaviour
     {
         if(this.transform.position.y < -12f)
         {
+            GameManager.GetComponent<GameUI>().health--;
             Debug.Log("Player fell off the grid and died");
             Destroy(this.gameObject);
 
