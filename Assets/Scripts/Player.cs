@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
 
     public bool HasJumped;
     public bool IsShieldOn;
+
+    public GameObject debugText;
     [SerializeField] private float ShieldTimer = 0;
 
     void Start()
@@ -32,10 +34,11 @@ public class Player : MonoBehaviour
         HasJumped = false;
         bulletpoint = this.transform.GetChild(0).gameObject;
         startingPosition = this.transform.position;
-        ForwardSpeed = 20f;
+        ForwardSpeed = 55f;
         crossImage = crosshair.GetComponent<Image>();
 
         GameManager = GameObject.FindGameObjectWithTag("GameUI");
+        debugText = GameObject.FindGameObjectWithTag("DebugText");
     }
 
     // Update is called once per frame
@@ -99,6 +102,8 @@ public class Player : MonoBehaviour
         ShieldPowerCounter();
 
         DeathZone();
+
+        debugText.GetComponent<Text>().text = "Speed: " + ForwardSpeed;
     }
 
    
@@ -142,7 +147,7 @@ public class Player : MonoBehaviour
                 GameManager.GetComponent<GameUI>().health--;
                 Destroy(this.gameObject, 0.5f);
 
-                GameManager.GetComponent<GameUI>().ReSpawn();
+               GameManager.GetComponent<GameUI>().ReSpawn();
             }
         }
 
@@ -197,9 +202,13 @@ public class Player : MonoBehaviour
 
     public void Jump()
     {
-        HasJumped = true;
-        Debug.Log("Jump selected");
-        this.GetComponent<Rigidbody>().AddForce(Vector3.up * 70f, ForceMode.Impulse);
+        if (!HasJumped)
+        {
+            HasJumped = true;
+            Debug.Log("Jump selected");
+            this.GetComponent<Rigidbody>().AddForce(Vector3.up * 70f, ForceMode.Impulse);
+        }
+      
     }
 
 
@@ -229,4 +238,6 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+   
 }

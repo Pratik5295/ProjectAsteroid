@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3451630624574991469}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 4.4, z: 76.4}
+  m_LocalPosition: {x: 0.3, y: 4.4, z: 94.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4248713604262468111}
@@ -316,8 +316,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 64.56289, y: 45.92462, z: 106.49915}
-  m_Center: {x: 0.31073946, y: -1.1715106, z: -16.514587}
+  m_Size: {x: 64.56289, y: 39.46725, z: 106.49915}
+  m_Center: {x: 0.31073773, y: 2.0571742, z: -16.514587}
 --- !u!114 &3318490082006812798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,11 +334,16 @@ MonoBehaviour:
     type: 3}
   crosshair: {fileID: 4244335523473529770}
   speed: 12
-  ForwardSpeed: 0
-  MinXValue: -7.5
-  MaxXValue: 7.5
+  ForwardSpeed: 50
+  MinXValue: -14
+  MaxXValue: 14
   startingPosition: {x: 0, y: 0, z: 0}
   GameManager: {fileID: 0}
+  MaxSpeed: 0
+  HasJumped: 0
+  IsShieldOn: 0
+  debugText: {fileID: 0}
+  ShieldTimer: 0
 --- !u!54 &4244335522269729672
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -455,7 +460,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4244335524210874364}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 92.8}
+  m_LocalPosition: {x: 0, y: 0, z: 75}
   m_LocalScale: {x: 14.285715, y: 14.285715, z: 14.285715}
   m_Children:
   - {fileID: 4244335523473529771}
