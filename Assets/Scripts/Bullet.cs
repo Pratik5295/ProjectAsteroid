@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] private float playerSpeed;
 
+    public GameObject enemyExplosion;
+
     void Start()
     {
         gameLoader = GameObject.FindGameObjectWithTag("GameUI");
@@ -36,6 +38,7 @@ public class Bullet : MonoBehaviour
             Debug.Log("Enemy hit!");
             gameLoader.GetComponent<GameUI>().coins++;
             Destroy(collision.gameObject);
+            Instantiate(enemyExplosion, collision.gameObject.transform.position, Quaternion.identity);
         }
         Destroy(this.gameObject);
     }

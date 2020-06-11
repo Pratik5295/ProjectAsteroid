@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     private GameObject bulletpoint;
     public GameObject bulletPrefab;
 
+    public bool InfiniteRunner;
     public GameObject crosshair;
     private Image crossImage;
     public float speed;
@@ -25,6 +26,9 @@ public class Player : MonoBehaviour
 
     public bool HasJumped;
     public bool IsShieldOn;
+
+    public GameObject enemyExplosion;
+    public GameObject selfExplosion;
 
     public GameObject debugText;
     [SerializeField] private float ShieldTimer = 0;
@@ -202,26 +206,39 @@ public class Player : MonoBehaviour
 
     public void Jump()
     {
-        if (!HasJumped)
+        if (!InfiniteRunner)
         {
-            HasJumped = true;
-            Debug.Log("Jump selected");
-            this.GetComponent<Rigidbody>().AddForce(Vector3.up * 70f, ForceMode.Impulse);
+            if (!HasJumped)
+            {
+                HasJumped = true;
+                Debug.Log("Jump selected");
+                this.GetComponent<Rigidbody>().AddForce(Vector3.up * 70f, ForceMode.Impulse);
+            }
         }
+
+        else
+        {
+            this.GetComponent<Rigidbody>().AddForce(Vector3.up * 100f, ForceMode.Impulse);
+        }
+       
       
     }
 
 
     public void DeathZone()
     {
-        if(this.transform.position.y < -12f)
+        if (!InfiniteRunner)
         {
-            GameManager.GetComponent<GameUI>().health--;
-            Debug.Log("Player fell off the grid and died");
-            Destroy(this.gameObject);
+            if (this.transform.position.y < -12f)
+            {
+                GameManager.GetComponent<GameUI>().health--;
+                Debug.Log("Player fell off the grid and died");
+                Destroy(this.gameObject);
 
-            GameManager.GetComponent<GameUI>().ReSpawn();
+                GameManager.GetComponent<GameUI>().ReSpawn();
+            }
         }
+       
     }
 
     public void ShieldPowerCounter()
