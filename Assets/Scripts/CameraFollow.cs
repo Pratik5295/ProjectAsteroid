@@ -20,6 +20,6 @@ public class CameraFollow : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
-        this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,player.transform.position.z - offset.z);
+        this.transform.position = new Vector3(this.transform.position.x,player.transform.position.y - offset.y ,player.transform.position.z - offset.z);
     }
 }

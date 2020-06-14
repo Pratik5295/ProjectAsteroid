@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     public GameObject gameLoader;
     private Rigidbody rigi;
+
+    public GameObject explosionPrefab;
     [SerializeField]private float speed;
     void Start()
     {
@@ -39,5 +41,12 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
      
+    }
+
+
+    public void Destruction()
+    {
+        Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
     }
 }

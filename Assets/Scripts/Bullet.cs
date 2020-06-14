@@ -37,8 +37,10 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("Enemy hit!");
             gameLoader.GetComponent<GameUI>().coins++;
-            Destroy(collision.gameObject);
-            Instantiate(enemyExplosion, collision.gameObject.transform.position, Quaternion.identity);
+            //  Destroy(collision.gameObject);
+            // Instantiate(enemyExplosion, collision.gameObject.transform.position, Quaternion.identity);
+
+            collision.gameObject.GetComponent<Enemy>().Destruction();
         }
         Destroy(this.gameObject);
     }
