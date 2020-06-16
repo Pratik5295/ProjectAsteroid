@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         HasJumped = false;
         bulletpoint = this.transform.GetChild(0).gameObject;
         startingPosition = this.transform.position;
-        ForwardSpeed = 55f;
+        ForwardSpeed = 30f;
         crossImage = crosshair.GetComponent<Image>();
 
         GameManager = GameObject.FindGameObjectWithTag("GameUI");
@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
             {
                 HasJumped = true;
                 Debug.Log("Jump selected");
-                this.GetComponent<Rigidbody>().AddForce(Vector3.up * 70f, ForceMode.Impulse);
+                this.GetComponent<Rigidbody>().AddForce(Vector3.up * 100f, ForceMode.Impulse);
             }
         }
 

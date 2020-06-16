@@ -15,6 +15,7 @@ TagManager:
   - Goal
   - Ground
   - DebugText
+  - TileParent
   layers:
   - Default
   - TransparentFX
